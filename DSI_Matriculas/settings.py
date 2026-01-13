@@ -1,18 +1,23 @@
 from pathlib import Path
 import os
-import dj_database_url  # asegúrate de instalarlo: pip install dj-database-url
+import dj_database_url  # pip install dj-database-url
 
+# -------------------------
 # Build paths
+# -------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# -------------------------
 # Seguridad
+# -------------------------
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-reemplaza-esto-por-tu-secreto')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-# ALLOWED_HOSTS
 ALLOWED_HOSTS = ['proyectofindeciclodsi.onrender.com', 'localhost', '127.0.0.1']
 
+# -------------------------
 # Aplicaciones
+# -------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -23,6 +28,9 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
 ]
 
+# -------------------------
+# Middleware
+# -------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -33,12 +41,19 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# -------------------------
+# URLs y WSGI
+# -------------------------
 ROOT_URLCONF = 'DSI_Matriculas.urls'
+WSGI_APPLICATION = 'DSI_Matriculas.wsgi.application'
 
+# -------------------------
+# Templates
+# -------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # carpeta de templates
+        'DIRS': [BASE_DIR / 'templates'],  # carpeta templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -51,19 +66,34 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'DSI_Matriculas.wsgi.application'
-
-# Base de datos (Render PostgreSQL)
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv(
-            'DATABASE_URL',
-            'postgresql://matriculasbd_user:JCRFxFOGuGHcnWhE0HSQ8HlOWLrOkByE@dpg-d5iua756ubrc73ecdkn0-a.virginia-postgres.render.com/matriculasbd'
+# -------------------------
+# Base de datos
+# -------------------------
+if os.getenv('DATABASE_URL'):
+    # Producción Render
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600,
+            ssl_require=True
         )
-    )
-}
+    }
+else:
+    # Local
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'MatriculasBD',
+            'USER': 'postgres',
+            'PASSWORD': 'Postgres123',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
-# Password validation
+# -------------------------
+# Validación de passwords
+# -------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -71,15 +101,21 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# -------------------------
 # Internacionalización
+# -------------------------
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
+# -------------------------
 # Archivos estáticos
+# -------------------------
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# -------------------------
 # Default primary key
+# -------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
