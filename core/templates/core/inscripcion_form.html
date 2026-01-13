@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+
+{% block title %}Crear/Editar Inscripción{% endblock %}
+
+{% block content %}
+<h1>{% if inscripcion %}Editar{% else %}Crear{% endif %} Inscripción</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="{% if inscripcion %}btn-editar{% else %}btn-crear{% endif %}">
+        {% if inscripcion %}Actualizar{% else %}Guardar{% endif %}
+    </button>
+    <a href="{% url 'inscripcion' %}" class="btn-cancelar">Cancelar</a>
+</form>
+{% endblock %}

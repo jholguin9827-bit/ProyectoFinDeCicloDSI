@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+
+{% block title %}Crear/Editar Periodo{% endblock %}
+
+{% block content %}
+<h1>{% if periodo %}Editar{% else %}Crear{% endif %} Periodo</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="{% if periodo %}btn-editar{% else %}btn-crear{% endif %}">
+        {% if periodo %}Actualizar{% else %}Guardar{% endif %}
+    </button>
+    <a href="{% url 'periodo' %}" class="btn-cancelar">Cancelar</a>
+</form>
+{% endblock %}

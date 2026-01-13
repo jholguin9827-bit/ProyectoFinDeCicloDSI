@@ -1,0 +1,34 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Logs
+*.log
+
+# Local environment variables
+.env
+
+# Django
+staticfiles/
+media/
+
+# Database files (si usas SQLite, no es necesario)
+# db.sqlite3
+
+# IDEs
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+.coverage
+htmlcov/

@@ -1,0 +1,35 @@
+{% extends "core/base.html" %}
+
+{% block title %}Lista de Estudiantes{% endblock %}
+
+{% block content %}
+<h1>Lista de Estudiantes</h1>
+
+<a href="{% url 'crear_estudiante' %}" class="btn-crear">Crear Estudiante</a>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Cédula</th>
+        <th>Correo</th>
+        <th>Acciones</th>
+    </tr>
+    {% for estudiante in estudiantes %}
+    <tr>
+        <td>{{ estudiante.estudiante_id }}</td>
+        <td>{{ estudiante.nombre }}</td>
+        <td>{{ estudiante.cedula }}</td>
+        <td>{{ estudiante.correo }}</td>
+        <td>
+            <a href="{% url 'editar_estudiante' estudiante.estudiante_id %}" class="btn-editar">Editar</a>
+            <a href="{% url 'eliminar_estudiante' estudiante.estudiante_id %}" class="btn-eliminar">Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">No hay estudiantes</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

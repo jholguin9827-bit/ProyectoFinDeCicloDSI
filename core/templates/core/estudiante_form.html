@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+
+{% block title %}Crear/Editar Estudiante{% endblock %}
+
+{% block content %}
+<h1>{% if estudiante %}Editar{% else %}Crear{% endif %} Estudiante</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="{% if estudiante %}btn-editar{% else %}btn-crear{% endif %}">
+        {% if estudiante %}Actualizar{% else %}Guardar{% endif %}
+    </button>
+    <a href="{% url 'estudiante' %}" class="btn-cancelar">Cancelar</a>
+</form>
+{% endblock %}
