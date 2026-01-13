@@ -1,19 +1,18 @@
-from pathlib import Path
 import os
-import dj_database_url  # pip install dj-database-url
+from pathlib import Path
+import dj_database_url
 
-# -------------------------
-# Build paths
-# -------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # -------------------------
 # Seguridad
 # -------------------------
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-reemplaza-esto-por-tu-secreto')
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+SECRET_KEY = os.getenv('SECRET_KEY', 'b3nD7XgqRzLJp_9u1S2Vw4F6YtA8KqM0ZxP5lR8cVbN')
 
-ALLOWED_HOSTS = ['proyectofindeciclodsi.onrender.com', 'localhost', '127.0.0.1']
+# DEBUG = True en local, False en Render
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'proyectofindeciclodsi.onrender.com']
 
 # -------------------------
 # Aplicaciones
@@ -41,9 +40,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# -------------------------
-# URLs y WSGI
-# -------------------------
 ROOT_URLCONF = 'DSI_Matriculas.urls'
 WSGI_APPLICATION = 'DSI_Matriculas.wsgi.application'
 
@@ -53,7 +49,7 @@ WSGI_APPLICATION = 'DSI_Matriculas.wsgi.application'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # carpeta templates
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,7 +66,7 @@ TEMPLATES = [
 # Base de datos
 # -------------------------
 if os.getenv('DATABASE_URL'):
-    # Producción Render
+    # Render
     DATABASES = {
         'default': dj_database_url.config(
             default=os.getenv('DATABASE_URL'),
@@ -92,7 +88,7 @@ else:
     }
 
 # -------------------------
-# Validación de passwords
+# Password validation
 # -------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
